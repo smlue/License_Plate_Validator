@@ -29,7 +29,7 @@ def analyze_license_plate(plate):
             return "invalid"
 
     standard = True
-    kraje = "ASULKHEPCJBMTZ"
+    regions = "ASULKHEPCJBMTZ"
 
     if len(plate) == 7:
         if plate[0] == "0":
@@ -62,6 +62,3 @@ def analyze_license_plate(plate):
         return "electric"
     else:
         return "invalid"   
-
-print(analyze_license_plate("1A10000"))
-print(analyze_license_plate("9BU 0000"))   
