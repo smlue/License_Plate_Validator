@@ -62,3 +62,6 @@ def analyze_license_plate(plate):
         return "electric"
     else:
         return "invalid"   
+
+
+#EXAMPLE USAGE
