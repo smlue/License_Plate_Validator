@@ -14,11 +14,11 @@ def analyze_license_plate(plate):
         
     count = 0
     for el in plate:
-        if not(el.isascii() and el.isalnum()):
+        if not(el.isascii() and el.isalnum()): #checks if character in plate is either a number or in the alphabet
             return "invalid"
-        if not(el.isupper()) and el.isalpha():
+        if not(el.isupper()) and el.isalpha(): #checks to see that if a the letter is in the alphabet then it must be upper case
             return "invalid"
-        if el.isdecimal():
+        if el.isdecimal():                     #checks if there is at least one number in plate
             count += 1
     
     if count == 0:
@@ -31,34 +31,37 @@ def analyze_license_plate(plate):
     standard = True
     regions = "ASULKHEPCJBMTZ"
 
+    #STANDARD CHECKS
     if len(plate) == 7:
-        if plate[0] == "0":
+        if plate[0] == "0":    #first character does is not 0 for a standard plate     
             standard = False
         for i in range(0, 7):
             element = plate[i]
             if i == 1:
-                if not(element in kraje):
+                if not(element in kraje):    #checks if the second character is in kraje
                     standard = False
                     break
             elif i == 2:
-                if not(element.isascii() and element.isalnum()):
+                if not(element.isascii() and element.isalnum()):    #checks if the third character is not a number or in the alphabet
                     standard = False
             elif i == 3:
-                if plate[1] != "A" and not element.isdigit():
+                if plate[1] != "A" and not element.isdigit():       #checks special case for Prague plate about the fourth character being a number
                     standard = False
             else:
-                if not element.isdigit():
+                if not element.isdigit():           #otherwise all the characters must be numbers
                     standard = False
                 
     else:
         standard = False
 
-    if standard:
+    if standard:            #if standard remains true then the plate is a standard plate according to Czech laws
         return "standard"
+    #CUSTOM CHECKS
     elif ((len(plate) == 7 or len(plate) == 8) and standard == False):
-        if not (plate[0] == "E" and plate[1] == "L"):
+        if not (plate[0] == "E" and plate[1] == "L"):                   #if plate is not standard and not electric but is valid then it is a custom plate
             return "custom"
-    elif ((len(plate) == 7 ) and plate[0] == "E" and plate[1] == "L" and plate[2].isdecimal() and plate[3].isdecimal() and plate[4].isdecimal()):
+    #ELECTRIC CHECKS
+    elif ((len(plate) == 7 ) and plate[0] == "E" and plate[1] == "L" and plate[2].isdecimal() and plate[3].isdecimal() and plate[4].isdecimal()):  #checks if it is electric
         return "electric"
     else:
         return "invalid"   
